@@ -1,0 +1,4 @@
+arduino~ish usb-serial lib for the ch32x03x (only tested on 033f8p6, wit pio board genericCH32X035F8U6)
+modified the files from WCH found here: https://github.com/openwch/ch32x035/tree/main/EVT/EXAM/USB/USBFS/DEVICE/SimulateCDC
+removed the UART references, addes some read/write functions.
+Not tested on mounriver, but might work if the files are placed in the right folders.
