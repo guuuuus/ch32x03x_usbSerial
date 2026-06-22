@@ -62,7 +62,7 @@ void usbSerial_begin()
     USBFS_Device_Init(ENABLE);
     NVIC_EnableIRQ(USBFS_IRQn);
 }
-void delay10us()
+void _delay10us()
 {
     volatile unsigned long cycles = SystemCoreClock / 1000000;
     while (cycles)
@@ -77,7 +77,7 @@ unsigned char runningat5v(void)
     unsigned char VDD_Voltage = 0;
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
     PWR_PVDLevelConfig(PWR_PVDLevel_3);
-    delay10us(10);
+   _delay10us();
     if (PWR_GetFlagStatus(PWR_FLAG_PVDO) == (uint32_t)RESET)
     {
         VDD_Voltage = 1;
@@ -233,7 +233,7 @@ void USBFS_Device_Init(FunctionalState sta)
         AFIO->CTLR = AFIO->CTLR & ~(UDP_PUE_MASK | UDM_PUE_MASK | USB_IOEN);
         USBFSH->BASE_CTRL = USBFS_UC_RESET_SIE | USBFS_UC_CLR_ALL;
         // Delay_Us(10);
-        delay10us();
+       _delay10us();
         USBFSD->BASE_CTRL = 0x00;
         NVIC_DisableIRQ(USBFS_IRQn);
     }
@@ -998,7 +998,7 @@ void USBFS_IRQHandler(void)
     {
         USBFSD->INT_FG = USBFS_UIF_SUSPEND;
         // Delay_Us(10);
-        delay10us();
+       _delay10us();
         /* usb suspend interrupt processing */
         if (USBFSD->MIS_ST & USBFS_UMS_SUSPEND)
         {
