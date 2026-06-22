@@ -49,8 +49,8 @@ unsigned char _usb_txcount = 0;
 volatile uint8_t USBFS_Endp_Busy[DEF_UEP_NUM];
 
 volatile UART_CTL Uart;                  /* Serial x control related structure */
-volatile uint32_t UARTx_Rx_DMACurCount;  /* Serial x receive DMA current count */
-volatile uint32_t UARTx_Rx_DMALastCount; /* last count of DMA received by serial x */
+// volatile uint32_t UARTx_Rx_DMACurCount;  /* Serial x receive DMA current count */
+// volatile uint32_t UARTx_Rx_DMALastCount; /* last count of DMA received by serial x */
 /******************************************************************************/
 /* Interrupt Service Routine Declaration*/
 void USBFS_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
