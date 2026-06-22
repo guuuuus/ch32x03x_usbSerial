@@ -1,6 +1,5 @@
 #include <usb_serial.h>
 
-
 unsigned short getLen(char *str)
 {
     unsigned short ret = 0;
@@ -11,38 +10,33 @@ unsigned short getLen(char *str)
 
 void usbSerial_print_ib(signed long num, unsigned char base)
 {
-	char ch[32];
-	char *r = print_i(ch, 32, num, base);
-	usbSerial_print_s(r);
+    char ch[32];
+    char *r = print_i(ch, 32, num, base);
+    usbSerial_print_s(r);
+    usbSerial_flush();
 }
 
 void usbSerial_println_ib(signed long num, unsigned char base)
 {
-	char ch[32];
-	char *r = print_i(ch, 32, num, base);
-	usbSerial_println_s(r);
+    char ch[32];
+    char *r = print_i(ch, 32, num, base);
+    usbSerial_println_s(r);
 }
-
 
 void usbSerial_print_s(char *string)
 {
-	unsigned short len = getLen(string);
-	usbSerial_writeP((unsigned char *)string, len);
+    unsigned short len = getLen(string);
+    usbSerial_writeP((unsigned char *)string, len);
+    usbSerial_flush();
 }
+
 void usbSerial_println_s(char *string)
 {
-	unsigned char ch[128]; // mac string len / send time?
-	unsigned short len = getLen(string);
-	// could use memcpy?
-	for (unsigned char i = 0; i < len; i++)
-	{
-		ch[i] = string[i];
-	}
-
-	ch[len] = '\n';
-	len++;
-	// string[len] = '\n';
-	usbSerial_writeP(ch, len);
+    unsigned short len = getLen(string);
+    char end = '\n';
+    usbSerial_writeP((unsigned char *)string, len);
+    usbSerial_writeP(&end, 1);
+    usbSerial_flush();
 }
 
 char *print_i(char *str, unsigned short len, signed long num, unsigned char base)
